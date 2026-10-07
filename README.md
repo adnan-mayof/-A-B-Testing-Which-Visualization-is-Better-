@@ -1,345 +1,182 @@
-# A/B Testing: Which Visualization is Better?
+# A/B Testing: Which Visualization Is Better?
 
-## Bar Chart vs. Line Chart
+## Introduction
 
-This project uses an A/B experiment to test whether participants are better
-able to answer a data-interpretation question when the same information is
-presented as a **bar chart** or a **line chart**.
+I wanted to learn how **A/B testing actually works**, so I decided to build a small A/B experiment from scratch.
 
-The experiment randomly assigns participants to one of two visualization
-conditions.
+The project started with a simple question:
 
-### Condition A
+> **Which visualization is better for presenting sales data—a line chart or a bar chart?**
 
-Bar chart
+Instead of choosing based on my own preference, I decided to build an experiment, collect responses, and use the data to see what happened.
 
-### Condition B
+## A Note About This Repository
 
-Line chart
+This repository is simply my way of **getting my feet into A/B testing**.
 
-Participants then answer the same visualization question.
+I am not trying to make this a long and complicated A/B testing project. There are many things that can be considered in a more advanced experiment, but I wanted to keep this project simple so I could build it, run it, and understand the basic workflow from beginning to end.
 
-Their actual answer is recorded, and the answer is evaluated as correct or
-incorrect.
+**Having said that, here are the simple steps this repository covers:**
 
 ---
 
-# Research Question
+## Step 1: Define the Problem
 
-> Does visualization type affect whether participants correctly answer the
-> visualization task?
+I have been hesitant about which chart is best for presenting the last quarters of sales data: a **line chart or a bar chart**.
 
-More specifically:
+How can I find out which one is better?
 
-> **Do participants answer the task correctly more often when they see a bar
-> chart or when they see a line chart?**
+Instead of choosing based on my own preference, I decided to use an **A/B test**.
 
----
+For this experiment:
 
-# Why this is an A/B test
+- **Control (A):** Bar chart
+- **Treatment (B):** Line chart
 
-An A/B test compares two versions of something while attempting to keep other
-important factors constant.
-
-In this experiment:
-
-**A = Bar chart**
-
-**B = Line chart**
-
-The underlying data and task remain the same.
-
-The visualization format is the experimental manipulation.
-
-Participants are randomly assigned to a condition.
+Everything else remains the same.
 
 ---
 
-# Experiment Workflow
+## Step 2: Define the Hypothesis
 
-Research Question
-        ↓
-Problem Definition
-        ↓
-Hypothesis
-        ↓
-A/B Visualization Design
-        ↓
-Sample Size Calculation
-        ↓
-Sample Size Trade-off
-        ↓
-Online Participant Recruitment
-        ↓
-Random Assignment
-        ↓
-Participant Sees Bar or Line Chart
-        ↓
-Participant Gives Answer
-        ↓
-Response Collection
-        ↓
-Google Sheet:
-"Reddit A/B Visualization Experiment"
-        ↓
-Data Quality Checks
-        ↓
-Answer → Correct / Incorrect
-        ↓
-Statistical Analysis
-        ↓
-Effect Size + Uncertainty
-        ↓
-Visualization of Results
-        ↓
-Research Report
-        ↓
-Decision
+### Null hypothesis (H₀)
+
+There is **no difference** between the bar chart and line chart in participants' ability to identify the correct answer.
+
+### Alternative hypothesis (H₁)
+
+There **is a difference** between the bar chart and line chart in participants' ability to identify the correct answer.
 
 ---
 
-# The Experiment
+## Step 3: Decide How to Measure the Difference
 
-## Experimental question
+I need a metric that allows me to compare the two groups.
 
-Which visualization produces a higher rate of correct answers?
+For this experiment, the metric is:
 
-| Condition | Chart |
-|---|---|
-| A | Bar chart |
-| B | Line chart |
+> **Did the participant pick the correct answer?**
 
----
+The participant sees the same sales data and is asked:
 
-# Participant Response
+> **Which month has the highest sales?**
 
-Participants provide an answer to the visualization task.
+The possible answers are:
 
-Example:
+- June
+- July
+- August
+- September
 
-Answer:
+The correct answer is:
 
-`September`
-
-The answer is compared with the predefined correct answer.
-
-If the answer matches:
-
-`Correct = TRUE`
-
-If the answer does not match:
-
-`Correct = FALSE`
+**September**
 
 ---
 
-# Primary Outcome
+## Step 4: Design the Data Collection Method
 
-The primary outcome is whether the participant's answer is correct.
+After I figured out what question I wanted to answer and how I would measure it, I needed to design the data collection method.
 
-The primary metric is therefore the **correct-answer rate**.
-
-For each chart condition:
-
-Correct-answer rate =
-Correct responses / Valid responses
-
-The primary comparison is:
-
-Line-chart correct-answer rate
-minus
-Bar-chart correct-answer rate
-
----
-
-# Example
-
-Suppose:
-
-Bar chart:
-
-70 correct out of 100 valid responses
-
-= 70% correct
-
-Line chart:
-
-80 correct out of 100 valid responses
-
-= 80% correct
-
-Estimated difference:
-
-80% - 70% = +10 percentage points
-
-The line-chart condition would have a 10-percentage-point higher correct-answer
-rate in this example.
-
----
-
-# Metrics
-
-## Primary metric
-
-Correct-answer rate.
-
-## Secondary metrics
-
-If collected:
-
-- Response time
-- Confidence
-- Completion rate
-
-Secondary metrics are supporting evidence and do not replace the primary
-outcome.
-
----
-
-# Sample Size
-
-The sample size is planned before recruitment.
-
-The calculation considers:
-
-- Baseline correct-answer rate
-- Minimum detectable difference
-- Statistical significance level
-- Statistical power
-- Allocation between chart conditions
-
-See:
-
-`02_experiment_design/sample_size.md`
-
----
-
-# Sample Size Trade-off
-
-A larger sample generally provides more precise estimates and greater ability
-to detect smaller effects.
-
-However, larger samples require:
-
-- More participants
-- More recruitment
-- More time
-- More data processing
-
-A smaller sample is easier to collect but produces greater uncertainty.
-
-The goal is therefore to collect a sample large enough to detect a meaningful
-difference while remaining feasible.
-
-See:
-
-`02_experiment_design/sample_size_tradeoffs.md`
-
----
-
-# Data Source
-
-Participant responses are collected through the experiment and stored in:
-
-**Google Sheet: Reddit A/B Visualization Experiment**
-
-The dataset contains:
-
-- Timestamp
-- Anonymous participant ID
-- Group
-- Chart
-- Answer
-- Correct
-- Event
-
----
-
-# Example Data
+I started by creating a **Google Sheet** with these columns:
 
 | Timestamp | Participant ID | Group | Chart | Answer | Correct | Event |
 |---|---|---|---|---|---|---|
-| 10/7/2026 3:45:43 | anonymous | A | bar | September | TRUE | response |
-| 10/7/2026 4:30:07 | anonymous | B | line | September | TRUE | response |
+
+Then I created an **Apps Script** connected to the Google Sheet. I edited the Apps Script, pasted the code, and deployed it.
+
+The Apps Script code is included in this repository.
+
+Next, I created the **HTML file**, which is available as `index.html`.
+
+The HTML file automatically randomizes participants between the control and treatment groups, so there is no need to manually assign participants.
+
+The basic flow is:
+
+**Participant → HTML experiment → Random assignment → Bar or Line chart → Answer → Apps Script → Google Sheet**
 
 ---
 
-# Statistical Analysis
+## Step 5: Test the Experiment
 
-The primary analysis compares the proportion of correct answers between the
-bar-chart and line-chart conditions.
+Before collecting responses, I tested the experiment to make sure:
 
-The analysis reports:
+- The page loaded correctly.
+- Participants were randomly assigned.
+- The correct chart appeared.
+- Participants could answer the question.
+- The response was recorded.
+- The data reached the Google Sheet.
 
-- Sample size
-- Number correct
-- Correct-answer rate
-- Difference in rates
-- Effect size
-- Confidence interval
-- Statistical test
-- P-value
-
-The p-value is not interpreted by itself.
-
-The size and uncertainty of the effect are also considered.
+Once the system worked, I was ready to collect responses.
 
 ---
 
-# Decision
+## Step 6: Collect Participants
 
-The final decision considers:
+After building and testing the experiment, I needed to decide where to find participants.
 
-1. Direction of the effect
-2. Size of the effect
-3. Confidence interval
-4. Statistical evidence
-5. Practical importance
-6. Data quality
+I decided to start with online communities, including:
 
-A statistically significant result is not automatically considered
-practically important.
+- Reddit
+- Facebook groups
 
----
+I kept the recruitment post short because I did not want to explain the A/B testing setup before participants completed the experiment.
 
-# Limitations
+### Recruitment Post
 
-Potential limitations include:
+**Quick data visualization challenge — 5 seconds**
 
-- Online participant recruitment
-- Non-representative sample
-- Self-selection
-- Limited task type
-- Possible learning or familiarity effects
-- Sample-size limitations
-- Results may not generalize to every visualization task
+Can you identify the month with the highest sales from a chart?
+
+**It takes about 5 seconds.**
+
+Try it here:
+
+https://adnan-mayof.github.io/reddit-ab-test/
+
+Thanks for participating!
 
 ---
 
-# Reproducibility
+## Step 7: Collect the Results
 
-The analysis code and documentation are contained in:
+After sharing the experiment, I collected **11 completed responses**.
 
-`12_reproducibility/`
+| Group | Chart | Participants | Correct | Accuracy |
+|---|---|---:|---:|---:|
+| A | Bar | 4 | 4 | 100% |
+| B | Line | 7 | 7 | 100% |
+| **Total** | — | **11** | **11** | **100%** |
 
-The goal is for another person to understand how the result was produced from
-the collected data.
+All 11 participants selected **September**, which was the correct answer.
 
 ---
 
-# Project Structure
+## Step 8: Compare the Results
 
-The repository follows the complete experimentation lifecycle:
+The results show:
 
-01. Research question
-02. Experiment design
-03. Visualization design
-04. Participant recruitment
-05. Experiment execution
-06. Data
-07. Data quality
-08. Statistical analysis
-09. Results
-10. Figures
-11. Research report
-12. Reproducibility
+- **Bar chart:** 4/4 correct = **100%**
+- **Line chart:** 7/7 correct = **100%**
+- **Observed difference:** **0 percentage points**
+
+Both groups performed equally well in this experiment.
+
+---
+
+## Step 9: Conclusion
+
+Based on the data collected, **neither the bar chart nor the line chart performed better**.
+
+Both visualizations produced a **100% accuracy rate**.
+
+Therefore:
+
+> **In this experiment, the bar chart and line chart performed equally well in helping participants identify the month with the highest sales.**
+
+The purpose of this project was not to prove that one visualization is universally better than the other.
+
+It was to **get my feet into A/B testing**, build a simple experiment, collect real responses, compare the results, and let the data show what happened.
+
+There are many other things that could be considered in a more advanced A/B test, but I intentionally kept this project simple rather than making it long and complicated.
